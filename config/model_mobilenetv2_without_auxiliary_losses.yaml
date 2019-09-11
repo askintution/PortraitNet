@@ -1,6 +1,6 @@
-data_root: /home/anicca/Program/python/Data/
-file_root: /home/anicca/Program/python/PortraitNet/data/select_data/
-model_root: /home/anicca/Program/python/PortraitNet/myExp/mobilenetv2_eg1800/single_224_without_group/
+data_root: /home/yupeng/Program/python/Data/
+file_root: /home/yupeng/Program/python/PortraitNet/data/select_data/
+model_root: /home/yupeng/Program/python/PortraitNet/myExp/mobilenetv2_eg1800/single_224_without_group/
 
 istrain: True
 task: 'seg'

@@ -32,10 +32,10 @@ from logger import Logger
 
 def calcIOU(img, mask):
     sum1 = img + mask
-    sum1[sum1>0] = 1
+    sum1[sum1 > 0] = 1
     sum2 = img + mask
-    sum2[sum2<2] = 0
-    sum2[sum2>=2] = 1
+    sum2[sum2 < 2] = 0
+    sum2[sum2 >= 2] = 1
     if np.sum(sum1) == 0:
         return 1
     else:
@@ -202,10 +202,10 @@ def test(dataLoader, netmodel, optimizer, epoch, logger, exp_args):
         loss = loss_mask
         losses.update(loss.data, input.size(0))
         
-        prob = softmax(output_mask)[0,1,:,:]
+        prob = softmax(output_mask)[0, 1, :, :]
         pred = prob.data.cpu().numpy()
-        pred[pred>0.5] = 1
-        pred[pred<=0.5] = 0
+        pred[pred > 0.5] = 1
+        pred[pred <= 0.5] = 0
         iou += calcIOU(pred, mask_var[0].data.cpu().numpy())
         
         # measure elapsed time
@@ -277,16 +277,16 @@ def test(dataLoader, netmodel, optimizer, epoch, logger, exp_args):
                             np.transpose(input.cpu().numpy()[0:num], (0, 2, 3, 1)), 
                             scale=exp_args.img_scale, 
                             mean=exp_args.img_mean, 
-                            val=exp_args.img_val)))[:,:,:,:3][:,:,:,::-1]
+                            val=exp_args.img_val)))[:, :, :, :3][:, :, :, ::-1]
             
             if exp_args.video:
-                input_prior = np.float32(np.transpose(input.cpu().numpy()[0:num], (0, 2, 3, 1))[:,:,:,3])
+                input_prior = np.float32(np.transpose(input.cpu().numpy()[0:num], (0, 2, 3, 1))[:, :, :, 3])
             
             input_mask = mask.cpu().numpy()[0:num]
-            input_mask[input_mask==255] = 0
+            input_mask[input_mask == 255] = 0
             softmax = nn.Softmax(dim=1)
             prob = softmax(output_mask)
-            masks_pred = np.transpose(prob.data.cpu().numpy()[0:num], (0, 2, 3, 1))[:,:,:,1]
+            masks_pred = np.transpose(prob.data.cpu().numpy()[0:num], (0, 2, 3, 1))[:, :, :, 1]
             
             info = dict()
             info['input_img'] = input_img
@@ -297,7 +297,7 @@ def test(dataLoader, netmodel, optimizer, epoch, logger, exp_args):
 
             if exp_args.addEdge:
                 input_edge = edge.cpu().numpy()[0:num]
-                edge_pred = np.transpose(output_edge.data.cpu().numpy()[0:num], (0, 2, 3, 1))[:,:,:,0]
+                edge_pred = np.transpose(output_edge.data.cpu().numpy()[0:num], (0, 2, 3, 1))[:, :, :, 0]
                 
                 if exp_args.stability:
                     input_img_ori = np.uint8((
@@ -305,11 +305,11 @@ def test(dataLoader, netmodel, optimizer, epoch, logger, exp_args):
                             np.transpose(input_ori.cpu().numpy()[0:num], (0, 2, 3, 1)), 
                             scale=exp_args.img_scale, 
                             mean=exp_args.img_mean, 
-                            val=exp_args.img_val)))[:,:,:,:3][:,:,:,::-1]
-             
+                            val=exp_args.img_val)))[:, :, :, :3][:, :, :, ::-1]
+
                     prob_ori = softmax(output_mask_ori)
-                    masks_pred_ori = np.transpose(prob_ori.data.cpu().numpy()[0:num], (0, 2, 3, 1))[:,:,:,1]
-                    edge_pred_ori = np.transpose(output_edge_ori.data.cpu().numpy()[0:num], (0, 2, 3, 1))[:,:,:,0]
+                    masks_pred_ori = np.transpose(prob_ori.data.cpu().numpy()[0:num], (0, 2, 3, 1))[:, :, :, 1]
+                    edge_pred_ori = np.transpose(output_edge_ori.data.cpu().numpy()[0:num], (0, 2, 3, 1))[:, :, :, 0]
                     
                     info['input_img_ori'] = input_img_ori
                     info['output_mask_ori'] = masks_pred_ori*255
@@ -603,7 +603,7 @@ def main(args):
     print ('===========> loading config <============')
     config_path = args.config_path
     print ("config path: ", config_path)
-    with open(config_path,'rb') as f:
+    with open(config_path, 'rb') as f:
         cont = f.read()
     cf = load(cont)
 
@@ -670,7 +670,7 @@ def main(args):
     dataset_train = Human(exp_args)
     print ("image number in training: ", len(dataset_train))
     dataLoader_train = torch.utils.data.DataLoader(dataset_train, batch_size=args.batchsize,
-                                                   shuffle=True, num_workers= args.workers)
+                                                   shuffle=True, num_workers=args.workers)
     
     # set testing dataset
     exp_args.istrain = False
@@ -784,7 +784,7 @@ if __name__ == '__main__':
     parser.add_argument('--model', default='PortraitNet', type=str, 
                         help='<model> should in [PortraitNet, ENet, BiSeNet]')
     parser.add_argument('--config_path', 
-                        default='/home/anicca/Program/python/PortraitNet/config/model_mobilenetv2_without_auxiliary_losses.yaml', 
+                        default='/home/yupeng/Program/python/PortraitNet/config/model_mobilenetv2_without_auxiliary_losses.yaml',
                         type=str, help='the config path of the model')
     
     parser.add_argument('--workers', default=4, type=int, help='number of data loading workers')
