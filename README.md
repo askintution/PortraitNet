@@ -19,11 +19,11 @@ We propose a real-time portrait segmentation model, called PortraitNet, that can
 
 ### Requirements
 - python 2.7
-- PyTorch 0.3.0.post4
+- PyTorch
 - Jupyter Notebook
-- Cuda 9.0
+- Cuda
+- conda install easydict matplotlib tqdm opencv scipy pyyaml numpy torchvision tensorflow-gpu
 - cocoapi
-- conda install easydict matplotlib tqdm opencv-python scipy pyyaml numpy torchvision tensorflow-gpu
 
 ### Download datasets
 - [EG1800](https://pan.baidu.com/s/1myEBdEmGz6ufniU3i1e6Uw) Since several image URL links are invalid in the [original EG1800 dataset](http://xiaoyongshen.me/webpage_portrait/index.html), we finally use 1447 images for training and 289 images for validation. 
