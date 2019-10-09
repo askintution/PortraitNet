@@ -22,7 +22,7 @@ We propose a real-time portrait segmentation model, called PortraitNet, that can
 - PyTorch
 - Jupyter Notebook
 - Cuda
-- conda install easydict matplotlib tqdm opencv scipy pyyaml numpy torchvision tensorflow-gpu
+- conda install easydict matplotlib tqdm opencv3 scipy pyyaml numpy torchvision tensorflow-gpu
 - cocoapi
 
 ### Download datasets
